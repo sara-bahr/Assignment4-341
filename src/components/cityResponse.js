@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ZipResponse(props) {
+function CityResponse(props) {
 
     if(props.responseData === null || props.responseData === '') {
         return null;
@@ -18,7 +18,7 @@ function ZipResponse(props) {
     if(props.responseData.cod === 200) {
         return (
             <div className="col-sm-8">
-                <table className="table table-info table-hover">
+                <table class="table table-info table-hover">
                     <tbody>
                         <tr>
                             <td>City</td>
@@ -56,4 +56,4 @@ function ZipResponse(props) {
     return null
 }
   
-export default ZipResponse
+export default CityResponse
