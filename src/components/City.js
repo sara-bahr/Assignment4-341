@@ -18,30 +18,8 @@ function City(props) {
 
     return (
         <div className="col-sm-4">
-            <div className="row">
-                <div className="col-sm-10">
-                    <style jsx="true">{`
-                        .form-control::-webkit-input-placeholder {
-                            color: #ddd;
-                        }
-                    `}
-                    </style>
-                    <input
-                        type="text/html" src="Map.html" width="100%" height="1000"
-                        className="form-control"
-                        id="usr"
-                        placeholder="NZ city name"
-                        onKeyPress={(event) => {
-                            if (event.key === "Enter") {
-                                validate(event);
-                            }
-                        }}
-                    ></input>
-                </div>
-            </div>
-            <div className="pl-3 row">
-                <div className="text-danger small"> {validationError}</div>
-            </div>
+             <embed type="text/html" src="googleMap.html" width="100%" height="1000" >
+                    </embed>
         </div>
     );
 }
