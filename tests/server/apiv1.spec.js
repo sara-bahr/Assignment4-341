@@ -76,7 +76,7 @@ describe('Get Weather', function() {
   it('with valid city name', function() {
     reqMock = {
       query: {
-        city: 79968
+        city: "Hamilton"
       }
     };
 
