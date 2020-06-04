@@ -1,5 +1,6 @@
 
 var map;
+
 function initMap() {
     var options = {
         center: { lat: -38.144323, lng: 175.494327 },
@@ -9,22 +10,25 @@ function initMap() {
     var geocoder = new google.maps.Geocoder();
     var map = new google.maps.Map(document.getElementById('map'), options);
     google.maps.event.addListener(map, 'click',
-        function (event) {
-            if(markers.length >0){
-                deleteMarker()
-            }
-            addMarker(event.latLng)
-            geocoder.geocode({
-                location: event.latLng,
-            }, (results, status) => {
-                if (status === 'OK') {
-                    if (results && results.length) {
-                        var filtered_array = results.filter(result => result.types.includes("locality"));
-                        var addressResult = filtered_array.length ? filtered_array[0] : results[0];
-                        if (addressResult.address_components) {
-                            addressResult.address_components.forEach((component) => {
-                                if (component.types.includes('locality')) {
-                                    document.getElementById("city").textContent = component.long_name
+    function (event) {
+        if (markers.length > 0) {
+            deleteMarker()
+        }
+        addMarker(event.latLng)
+        
+        geocoder.geocode({
+            location: event.latLng,
+        }, (results, status) => {
+            if (status === 'OK') {
+                if (results && results.length) {
+                    var filtered_array = results.filter(result => result.types.includes("locality"));
+                    var addressResult = filtered_array.length ? filtered_array[0] : results[0];
+                    
+                    if (addressResult.address_components) {
+                        addressResult.address_components.forEach((component) => {
+                            if (component.types.includes('locality')) {
+                                document.getElementById("city").textContent = component.long_name
+                                localStorage.setItem("store", component.long_name)
                                     var cityName = component.long_name
                                     handleCityChange(cityName)
                                 }
@@ -35,6 +39,7 @@ function initMap() {
             });
         })
 
+
     function addMarker(coords) {
         var marker = new google.maps.Marker({
             position: coords,
@@ -42,6 +47,7 @@ function initMap() {
 
         })
         markers.push(marker);
+        //console.log(marker)
     }
     function deleteMarker() {
         markers[0].setMap(null)
@@ -50,12 +56,16 @@ function initMap() {
 
 }
 var handleCityChange = async (cityName) => {
+
+    
+    
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=6b7b471967dd0851d0010cdecf28f829&units=metric&q=${cityName},nz`)
     const json = await res.json()
+    // console.log(json);
+    localStorage.setItem("store", json.name)
+
     var table = document.getElementsByClassName("table")[0]
-    console.log(table)
     if (json.cod === 200) {
-        document.cookie = json.name;
         let rows = [{
             "name": "City",
             "index": json.name
@@ -99,4 +109,3 @@ var handleCityChange = async (cityName) => {
         table.innerHTML = json.message;
     }
 }
-
