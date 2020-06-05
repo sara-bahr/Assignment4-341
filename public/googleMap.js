@@ -63,7 +63,7 @@ var handleCityChange = async (cityName) => {
     const json = await res.json()
     // console.log(json);
     localStorage.setItem("store", json.name)
-
+    
     var table = document.getElementsByClassName("table")[0]
     if (json.cod === 200) {
         let rows = [{
